@@ -1,0 +1,298 @@
+<mat-tab-group selectedIndex="0" animationDuration="0ms">
+  <mat-tab [label]="Table1">
+    <ejs-grid
+      #grid
+      [dataSource]="data"
+      [allowSorting]="true"
+      [allowReordering]="true"
+      [allowResizing]="true"
+      [allowGrouping]="true"
+      [allowFiltering]="true"
+      [allowPaging]="true"
+      [enableStickyHeader]="true"
+      [filterSettings]="filterSettings"
+      [groupSettings]="groupSettings"
+      [editSettings]="editSettings"
+      [selectionSettings]="selectionOptions"
+      [pageSettings]="pageOptions"
+      [gridLines]="'Both'"
+      height="370px"
+      width="100%"
+      (dataBound)="daBound($event)"
+      (actionBegin)="actionBegin($event)"
+      (load)="load($event)"
+      *ngIf="data; else elseBlock"
+    >
+      <e-columns>
+        <ng-template #template ngFor let-column [ngForOf]="tempColumnDef">
+          <!-- String Type -->
+          <e-column
+            *ngIf="column.Type == 'String'"
+            [field]="column.Name"
+            [headerText]="column.DisplayName"
+            [allowEditing]="!column.IsReadOnly"
+            [customAttributes]="
+              !column.IsReadOnly
+                ? { class: 'editcss' }
+                : { class: 'noneditcss' }
+            "
+          ></e-column>
+          <!-- Client ID Type -->
+          <e-column
+            *ngIf="column.Type == 'Integer' && column.Name == 'client_id'"
+            [field]="column.Name"
+            [headerText]="'hola'"
+            [isPrimaryKey]="true"
+            [allowEditing]="!column.IsReadOnly"
+            [visible]="false"
+          ></e-column>
+          <!-- Integer Type -->
+          <e-column
+            *ngIf="
+              (column.Type == 'Integer' ||
+                column.Type == 'Number' ||
+                column.Type == 'NUMBER') &&
+              column.Name != 'client_id'
+            "
+            [field]="column.Name"
+            [headerText]="column.DisplayName"
+            [allowEditing]="!column.IsReadOnly"
+            [edit]="numericParams"
+            [customAttributes]="
+              !column.IsReadOnly
+                ? { class: 'editcss' }
+                : { class: 'noneditcss' }
+            "
+          ></e-column>
+          <!-- Dropdown Type -->
+          <e-column
+            *ngIf="column.Type == 'WAFER_SELECTION'"
+            [field]="column.Name"
+            [headerText]="column.DisplayName"
+            [allowEditing]="!column.IsReadOnly"
+            [allowFiltering]="false"
+            [allowGrouping]="false"
+            [edit]="waferSelectionDropDownParams"
+            [customAttributes]="
+              !column.IsReadOnly
+                ? { class: 'editcss' }
+                : { class: 'noneditcss' }
+            "
+          ></e-column>
+          <!-- DropDown2 Type -->
+          <e-column
+            *ngIf="column.Type == 'SELECTION_RADIO'"
+            [field]="column.Name"
+            [headerText]="column.DisplayName"
+            [allowEditing]="!column.IsReadOnly"
+            [allowGrouping]="false"
+            [allowFiltering]="false"
+            [edit]="dropDownParams"
+            [customAttributes]="
+              !column.IsReadOnly
+                ? { class: 'editcss' }
+                : { class: 'noneditcss' }
+            "
+          >
+            <ng-template #template let-data>
+              <div
+                *ngFor="
+                  let selection of getSelectionGroupValues(
+                    data[data.column.field]
+                  )
+                "
+              >
+                <span
+                  *ngIf="
+                    isRadioButtonChecked(selection, data[data.column.field])
+                  "
+                  >{{ selection }}</span
+                >
+              </div>
+            </ng-template>
+          </e-column>
+          <!-- Selection CheckBox Type -->
+          <!-- <e-column
+        *ngIf="column.Type == 'SELECTION_CHECKBOX'"
+        [field]="column.Name"
+        [headerText]="column.DisplayName"
+        [allowEditing]="!column.IsReadOnly"
+        [allowGrouping]="false"
+        [customAttributes]="
+          !column.IsReadOnly ? { class: 'editcss' } : { class: 'noneditcss' }
+        "
+      >
+        <ng-template #template let-data>
+          <span
+            *ngFor="let selection of getSelectedValues(data); let last = last"
+          >
+            {{ selection }}
+            <span *ngIf="!last">,</span>
+          </span>
+        </ng-template>
+        <ng-template #editTemplate let-data>
+          <ejs-multiselect
+            id="multiselectelement"
+            [value]="getSelectedValues(data)"
+            [dataSource]="getCellData(data)"
+            [fields]="{ value: 'Mkey', text: 'Mkey' }"
+            [mode]="'CheckBox'"
+            (change)="cellDataChanged($event, data)"
+          ></ejs-multiselect>
+        </ng-template>
+      </e-column> -->
+        </ng-template>
+      </e-columns>
+    </ejs-grid>
+
+    <ng-template #elseBlock> No setup Information to display </ng-template>
+  </mat-tab>
+  <mat-tab [label]="Table2">
+    <ejs-grid
+      #grid
+      [dataSource]="data"
+      [allowSorting]="true"
+      [allowReordering]="true"
+      [allowResizing]="true"
+      [allowGrouping]="true"
+      [allowFiltering]="true"
+      [allowPaging]="true"
+      [enableStickyHeader]="true"
+      [filterSettings]="filterSettings"
+      [groupSettings]="groupSettings"
+      [editSettings]="editSettings"
+      [selectionSettings]="selectionOptions"
+      [pageSettings]="pageOptions"
+      [gridLines]="'Both'"
+      height="370px"
+      width="100%"
+      (dataBound)="daBound($event)"
+      (actionBegin)="actionBegin($event)"
+      (load)="load($event)"
+      *ngIf="data; else elseBlock"
+    >
+      <e-columns>
+        <ng-template #template ngFor let-column [ngForOf]="tempColumnDef">
+          <!-- String Type -->
+          <e-column
+            *ngIf="column.Type == 'String'"
+            [field]="column.Name"
+            [headerText]="column.DisplayName"
+            [allowEditing]="!column.IsReadOnly"
+            [customAttributes]="
+              !column.IsReadOnly
+                ? { class: 'editcss' }
+                : { class: 'noneditcss' }
+            "
+          ></e-column>
+          <!-- Client ID Type -->
+          <e-column
+            *ngIf="column.Type == 'Integer' && column.Name == 'client_id'"
+            [field]="column.Name"
+            [headerText]="'hola'"
+            [isPrimaryKey]="true"
+            [allowEditing]="!column.IsReadOnly"
+            [visible]="false"
+          ></e-column>
+          <!-- Integer Type -->
+          <e-column
+            *ngIf="
+              (column.Type == 'Integer' ||
+                column.Type == 'Number' ||
+                column.Type == 'NUMBER') &&
+              column.Name != 'client_id'
+            "
+            [field]="column.Name"
+            [headerText]="column.DisplayName"
+            [allowEditing]="!column.IsReadOnly"
+            [edit]="numericParams"
+            [customAttributes]="
+              !column.IsReadOnly
+                ? { class: 'editcss' }
+                : { class: 'noneditcss' }
+            "
+          ></e-column>
+          <!-- Dropdown Type -->
+          <e-column
+            *ngIf="column.Type == 'WAFER_SELECTION'"
+            [field]="column.Name"
+            [headerText]="column.DisplayName"
+            [allowEditing]="!column.IsReadOnly"
+            [allowFiltering]="false"
+            [allowGrouping]="false"
+            [edit]="waferSelectionDropDownParams"
+            [customAttributes]="
+              !column.IsReadOnly
+                ? { class: 'editcss' }
+                : { class: 'noneditcss' }
+            "
+          ></e-column>
+          <!-- DropDown2 Type -->
+          <e-column
+            *ngIf="column.Type == 'SELECTION_RADIO'"
+            [field]="column.Name"
+            [headerText]="column.DisplayName"
+            [allowEditing]="!column.IsReadOnly"
+            [allowGrouping]="false"
+            [allowFiltering]="false"
+            [edit]="dropDownParams"
+            [customAttributes]="
+              !column.IsReadOnly
+                ? { class: 'editcss' }
+                : { class: 'noneditcss' }
+            "
+          >
+            <ng-template #template let-data>
+              <div
+                *ngFor="
+                  let selection of getSelectionGroupValues(
+                    data[data.column.field]
+                  )
+                "
+              >
+                <span
+                  *ngIf="
+                    isRadioButtonChecked(selection, data[data.column.field])
+                  "
+                  >{{ selection }}</span
+                >
+              </div>
+            </ng-template>
+          </e-column>
+          <!-- Selection CheckBox Type -->
+          <!-- <e-column
+        *ngIf="column.Type == 'SELECTION_CHECKBOX'"
+        [field]="column.Name"
+        [headerText]="column.DisplayName"
+        [allowEditing]="!column.IsReadOnly"
+        [allowGrouping]="false"
+        [customAttributes]="
+          !column.IsReadOnly ? { class: 'editcss' } : { class: 'noneditcss' }
+        "
+      >
+        <ng-template #template let-data>
+          <span
+            *ngFor="let selection of getSelectedValues(data); let last = last"
+          >
+            {{ selection }}
+            <span *ngIf="!last">,</span>
+          </span>
+        </ng-template>
+        <ng-template #editTemplate let-data>
+          <ejs-multiselect
+            id="multiselectelement"
+            [value]="getSelectedValues(data)"
+            [dataSource]="getCellData(data)"
+            [fields]="{ value: 'Mkey', text: 'Mkey' }"
+            [mode]="'CheckBox'"
+            (change)="cellDataChanged($event, data)"
+          ></ejs-multiselect>
+        </ng-template>
+      </e-column> -->
+        </ng-template>
+      </e-columns>
+    </ejs-grid>
+
+    <ng-template #elseBlock> No setup Information to display </ng-template>
+  </mat-tab>
+</mat-tab-group>
