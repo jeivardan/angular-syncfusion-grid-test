@@ -66,13 +66,13 @@
           ></e-column>
           <!-- Dropdown Type -->
           <e-column
-            *ngIf="column.Type == 'WAFER_SELECTION'"
+            *ngIf="column.Type == 'SELECTION'"
             [field]="column.Name"
             [headerText]="column.DisplayName"
             [allowEditing]="!column.IsReadOnly"
             [allowFiltering]="false"
             [allowGrouping]="false"
-            [edit]="waferSelectionDropDownParams"
+            [edit]="dropDownParams"
             [customAttributes]="
               !column.IsReadOnly
                 ? { class: 'editcss' }
@@ -87,7 +87,7 @@
             [allowEditing]="!column.IsReadOnly"
             [allowGrouping]="false"
             [allowFiltering]="false"
-            [edit]="dropDownParams"
+            [edit]="dropDownParams1"
             [customAttributes]="
               !column.IsReadOnly
                 ? { class: 'editcss' }
@@ -214,13 +214,13 @@
           ></e-column>
           <!-- Dropdown Type -->
           <e-column
-            *ngIf="column.Type == 'WAFER_SELECTION'"
+            *ngIf="column.Type == 'SELECTION'"
             [field]="column.Name"
             [headerText]="column.DisplayName"
             [allowEditing]="!column.IsReadOnly"
             [allowFiltering]="false"
             [allowGrouping]="false"
-            [edit]="waferSelectionDropDownParams"
+            [edit]="dropDownParams"
             [customAttributes]="
               !column.IsReadOnly
                 ? { class: 'editcss' }
